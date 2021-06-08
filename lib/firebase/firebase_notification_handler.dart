@@ -31,7 +31,7 @@ class FirebaseNotifications {
 
     //Subscribe to topic
     _messaging
-        .subscribeToTopic('com.dev.fcm')
+        .subscribeToTopic('default_notification_channel_id')
         .whenComplete(() => print('Subscribe OK'));
 
     Future.delayed(Duration(seconds: 1), () {
@@ -41,6 +41,7 @@ class FirebaseNotifications {
           onMessage: (Map<String, dynamic> message) async {
             PushNotification notification = PushNotification.fromJson(message);
             // On message, fire when we receive message from Firebase
+            print('[onMessage]  $message');
             if (Platform.isAndroid) {
               showNotification(notification.dataTitle, notification.dataBody,
                   notification.customData);
@@ -51,6 +52,7 @@ class FirebaseNotifications {
           },
           onResume: (Map<String, dynamic> message) async {
             PushNotification notification = PushNotification.fromJson(message);
+            print('[onResume]  $message');
             // On Resume, fire when we open app from notification
             if (Platform.isIOS) {
               showDialog(
@@ -69,6 +71,7 @@ class FirebaseNotifications {
           },
           onLaunch: (Map<String, dynamic> message) async {
             PushNotification notification = PushNotification.fromJson(message);
+            print('[onLaunch]  $message');
             if (Platform.isIOS) {
               showDialog(
                   context: myContext,
