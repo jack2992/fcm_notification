@@ -26,7 +26,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"to\": \"Change_it\",\n    \n    \"notification\": {\n        \"body\": \"Body of Your Notification\",\n        \"title\": \"Title of Your Notification\"\n    },\n    \"priority\": \"high\",\n    \"data\": {\n        \"body\": \"Body of Your Notification in Data\",\n        \"title\": \"Title of Your Notification in Title\",\n        \"click_action\": \"FLUTER_NOTIFICATION_CLICK\",\n        \"status\": \"done\",\n        \"id\": \"1\",\n        \"custom_data\": {\n        \t\"action\":\"NEW\",\n        \t\"module_id\":\"OPEN_APP_NEW\",\n        \t\"data\":{}\n        }\n    }\n}"
+					"raw": "{\n    \"to\": \"Change_it\",\n    \n    \"notification\": {\n        \"body\": \"Body of Your Notification\",\n        \"title\": \"Title of Your Notification\"\n    },\n    \"priority\": \"high\",\n    \"data\": {\n        \"body\": \"Body of Your Notification in Data\",\n        \"title\": \"Title of Your Notification in Title\",\n        \"click_action\": \"FLUTTER_NOTIFICATION_CLICK\",\n        \"status\": \"done\",\n        \"id\": \"1\",\n        \"custom_data\": {\n        \t\"action\":\"NEW\",\n        \t\"module_id\":\"OPEN_APP_NEW\",\n        \t\"data\":{}\n        }\n    }\n}"
 				},
 				"description": "This is Test FCM"
 			},

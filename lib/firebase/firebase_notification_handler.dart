@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:fcm_notification/firebase/notification_handler.dart';
+import 'package:fcm_notification/home_page.dart';
 import 'package:fcm_notification/model/push_notification.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -42,52 +43,63 @@ class FirebaseNotifications {
             PushNotification notification = PushNotification.fromJson(message);
             // On message, fire when we receive message from Firebase
             print('[onMessage]  $message');
-            if (Platform.isAndroid) {
-              showNotification(notification.dataTitle, notification.dataBody,
-                  notification.customData);
-            } else if (Platform.isIOS) {
-              showNotification(notification.title, notification.body,
-                  notification.customData);
-            }
+            // if (Platform.isAndroid) {
+            //   showNotification(notification.dataTitle, notification.dataBody,
+            //       notification.customData);
+            // } else if (Platform.isIOS) {
+            //   showNotification(notification.title, notification.body,
+            //       notification.customData);
+            // }
+            showAlertDialog(context, notification);
           },
           onResume: (Map<String, dynamic> message) async {
             PushNotification notification = PushNotification.fromJson(message);
             print('[onResume]  $message');
             // On Resume, fire when we open app from notification
-            if (Platform.isIOS) {
-              showDialog(
-                  context: myContext,
-                  builder: (BuildContext context) => CupertinoAlertDialog(
-                        title: Text(notification.title),
-                        content: Text(notification.body),
-                        actions: [
-                          CupertinoDialogAction(
-                            isDefaultAction: true,
-                            child: Text('OK'),
-                          ),
-                        ],
-                      ));
-            }
+            showAlertDialog(context, notification);
           },
           onLaunch: (Map<String, dynamic> message) async {
             PushNotification notification = PushNotification.fromJson(message);
             print('[onLaunch]  $message');
-            if (Platform.isIOS) {
-              showDialog(
-                  context: myContext,
-                  builder: (BuildContext context) => CupertinoAlertDialog(
-                        title: Text(notification.title),
-                        content: Text(notification.body),
-                        actions: [
-                          CupertinoDialogAction(
-                            isDefaultAction: true,
-                            child: Text('OK'),
-                          ),
-                        ],
-                      ));
-            }
+            showAlertDialog(context, notification);
           });
     });
+  }
+
+  void showAlertDialog(BuildContext context, PushNotification notification) {
+    showDialog(
+        context: context,
+        child:  CupertinoAlertDialog(
+          title: Text(notification.dataTitle),
+          content: Text(notification.dataBody),
+          actions: <Widget>[
+            CupertinoDialogAction(
+                isDefaultAction: true,
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+                child: Text("Cancel",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18.0,
+                  ),)
+            ),
+            CupertinoDialogAction(
+                textStyle: TextStyle(color: Colors.blue),
+                isDefaultAction: true,
+                onPressed: () async {
+                  Navigator.pop(context);
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (BuildContext ctx) => HomePage(notification: notification,)));
+                },
+                child: Text("OK",
+                  style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18.0,
+                ),)
+            ),
+          ],
+        ));
   }
 
   static Future fcmBackgroundMessageHandler(
