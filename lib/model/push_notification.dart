@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class PushNotification {
   PushNotification({
     this.title,
@@ -15,11 +17,11 @@ class PushNotification {
 
   factory PushNotification.fromJson(Map<String, dynamic> json) {
     return PushNotification(
-      title: json["notification"]["title"],
-      body: json["notification"]["body"],
-      dataTitle: json["data"]["title"],
-      dataBody: json["data"]["body"],
-      customData: json["data"]["custom_data"],
+      title: Platform.isAndroid ? json["notification"]["title"] : json["aps"]["alert"]["title"],
+      body: Platform.isAndroid ? json["notification"]["body"] : json["aps"]["alert"]["body"],
+      dataTitle: Platform.isAndroid ? json["data"]["title"] : json["title"],
+      dataBody: Platform.isAndroid ? json["data"]["body"] : json["body"],
+      customData: Platform.isAndroid ? json["data"]["custom_data"] : json["custom_data"],
     );
   }
 }

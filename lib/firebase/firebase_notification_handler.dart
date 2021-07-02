@@ -70,8 +70,8 @@ class FirebaseNotifications {
     showDialog(
         context: context,
         child:  CupertinoAlertDialog(
-          title: Text(notification.dataTitle),
-          content: Text(notification.dataBody),
+          title: Text(notification.dataTitle != null ? notification.dataTitle : notification.title),
+          content: Text(notification.dataBody != null ? notification.dataBody : notification.body),
           actions: <Widget>[
             CupertinoDialogAction(
                 isDefaultAction: true,
